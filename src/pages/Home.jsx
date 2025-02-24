@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";  
 import MovieCard from "../components/MovieCard";  
+import { Link } from "react-router-dom"; 
 
 const Home = () => {  
     const [movies, setMovies] = useState([]);  
@@ -24,8 +25,10 @@ const Home = () => {
             <h1 className="mb-4">Popular Movies</h1>  
             <div className="row">  
                 {movies.map((movie) => (  
-                    <div key={movie.id} className="col-md-3 mb-4">  
-                        <MovieCard movie={movie} />  
+                    <div key={movie.id} className="col-md-3 mb-4"> 
+                        <Link to={`/movie/${movie.id}`} style={{textDecoration: "none", color:"inherit"}}>
+                            <MovieCard movie={movie} />  
+                        </Link> 
                     </div>  
                 ))}  
             </div>  

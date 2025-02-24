@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";  
 
-const Navbar = () => {  
+const Navbar = ({ isDarkMode, toggleTheme }) => {  
     return (  
-        <nav className="navbar navbar-dark bg-dark p-3 d-flex justify-content-between">  
+        <nav className={`navbar ${isDarkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"} p-3 d-flex justify-content-between`}>  
             <h1 className="navbar-brand">  
-                <Link to="/" className="text-decoration-none text-light">MovieApp</Link>  
+                <Link to="/" className={`text-decoration-none ${isDarkMode ? "text-light" : "text-dark"}`}>MovieApp</Link>  
             </h1>  
-            <div>  
-                <Link className="btn btn-outline-light" to="/favorites">Favorites</Link>  
-            </div>  
+            <button className="btn btn-outline-secondary" onClick={toggleTheme}>  
+                {isDarkMode ? "Light Mode" : "Dark Mode"}  
+            </button>  
         </nav>  
     );  
 };  
