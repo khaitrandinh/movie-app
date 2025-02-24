@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 const Home = () => {  
     const [movies, setMovies] = useState([]);  
     useEffect(() => {  
-        const API_URL = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&amp;api_key=3fd2be6f0c70a2a598f084ddfb75487c&amp;page=1";
+        const API_URL = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&;page=1";
 
         const fetchMovies = async () => {  
             try {  
