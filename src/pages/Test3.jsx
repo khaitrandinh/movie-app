@@ -37,10 +37,10 @@ const Test3 = ()=>{
         fetchUser();
     }, []); // Runs only once when component mounts
 
-    const handleChange = (e) => {
-        const genre = genres.find(g => g.name === e.target.value);
-        setSelectedGenre(genre);
-    };
+    // const handleChange = (e) => {
+    //     const genre = genres.find(g => g.name === e.target.value);
+    //     setSelectedGenre(genre);
+    // };
     
 
     return(

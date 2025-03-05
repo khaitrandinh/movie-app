@@ -1,49 +1,73 @@
-import { Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(searchParams.get("q") || "");
-
-  // Handle search input change
-  const handleSearchChange = (e) => {
-    const value = e.target.value.trim(); 
-    setSearchTerm(value);
-    const newParams = new URLSearchParams(searchParams);
-    value ? newParams.set("q", value) : newParams.delete("q");
-    setSearchParams(newParams);
-  };
-
-  // Handle clearing the search input
-  const handleClearSearch = () => {
-    setSearchTerm("");
-    setSearchParams(new URLSearchParams()); // Reset URL params
-  };
+  const { user, logout } = useAuth();
 
   return (
-    <nav className="navbar navbar-dark bg-dark p-3 container-fluid d-flex align-items-center justify-content-between">
-      <h1 className="navbar-brand mb-0">
-        <Link to="/" className="text-decoration-none text-light">MovieApp</Link>
-      </h1>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+      <div className="container">
+        {/* Logo thương hiệu */}
+        <Link className="navbar-brand fw-bold" to="/">
+          🎬 Movie App
+        </Link>
 
-      {/* Search Bar */}
-      <div className="d-flex">
-        <input type="text" className="form-control me-2" style={{ maxWidth: "400px" }}
-          placeholder="Search movies..."
-          value={searchTerm} onChange={handleSearchChange}
-        />
-        {searchTerm && (
-          <button className="btn btn-outline-secondary" onClick={handleClearSearch}>
-            Clear
-          </button>
-        )}
-      </div>
+        {/* Button Toggle Menu (Mobile) */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-      {/* Navigation Links */}
-      <div>
-        <Link className="btn btn-outline-light me-2" to="/genre">Genres</Link>
-        <Link className="btn btn-outline-light" to="/test3">Test </Link>
-        <Link className="btn btn-outline-light" to="/login">Login </Link>
+        {/* Menu chính */}
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">🏠 Home</Link>
+            </li>
+
+            {user ? (
+              // Nếu đã đăng nhập, hiển thị dropdown menu
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  👤 {user.displayName || user.email}
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <li><Link className="dropdown-item" to="/profile">👤 Profile</Link></li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li>
+                    <button className="dropdown-item text-danger" onClick={logout}>
+                      🚪 Logout
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              // Nếu chưa đăng nhập, hiển thị nút Login & Register
+              <>
+                <li className="nav-item">
+                  <Link className="btn btn-outline-light me-2" to="/login">🔑 Login</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="btn btn-primary" to="/signup">📝 Register</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </nav>
   );
